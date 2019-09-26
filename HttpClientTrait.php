@@ -440,11 +440,15 @@ trait HttpClientTrait
 
     /**
      * Removes dot-segments from a path.
-     *
+     * TODO: recursive call bug
+     * При использовнии урла с точкой, например /crm.get/ возникает бесконечная рекурсия
+     * Баг повторяется только при использовнии  php-fpm в php-cli не наблюдается
      * @see https://tools.ietf.org/html/rfc3986#section-5.2.4
      */
     private static function removeDotSegments(string $path)
     {
+        return $path;
+        /*
         $result = '';
 
         while (!\in_array($path, ['', '.', '..'], true)) {
@@ -464,6 +468,7 @@ trait HttpClientTrait
         }
 
         return $result;
+        */
     }
 
     /**
